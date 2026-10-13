@@ -50,14 +50,14 @@ if(!RM){
 let P=RM?.3:0;
 try{const t=document.createElement('canvas');webgl=!!(t.getContext('webgl2')||t.getContext('webgl'))}catch(e){}
 if(!RM){
- ScrollTrigger.create({trigger:'#hero',start:'top top',end:'+=750%',pin:true,scrub:true,onUpdate:s=>{P=s.progress}});
- gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'#hero',start:'top top',end:'+=750%',scrub:.5}}).to('#veil',{opacity:1,duration:.14},.78).to({},{duration:.001},1);
+ ScrollTrigger.create({trigger:'#hero',start:'top top',end:'+=350%',pin:true,scrub:true,onUpdate:s=>{P=s.progress}});
+ gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'#hero',start:'top top',end:'+=350%',scrub:.2}}).to('#veil',{opacity:1,duration:.14},.78).to({},{duration:.001},1);
 }else{$('#veil').style.display='none';$('#cue').style.display='none';$('#rail').style.display='none'}
 (function(){
 const cv=$('#gl'),x=cv.getContext('2d'),FR=window.FRAMES||[],N=FR.length,hero=$('#hero'),cue=$('#cue'),rail=$('#rail i');
 if(!N){$('#fb').hidden=false;return}
 const im=new Array(N);let dirty=1,rdy=RM;
-setTimeout(()=>{rdy=true;dirty=1},900);
+setTimeout(()=>{rdy=true;dirty=1},250);
 const ld=i=>{if(i>=N)return;const g=new Image();g.decoding='async';g.onload=()=>{im[i]=g;dirty=1;ld(i+4)};g.onerror=()=>ld(i+4);g.src=FR[i]};
 for(let k=0;k<4;k++)ld(k);
 const near=i=>{for(let k=i;k>=0;k--)if(im[k])return im[k];for(let k=i;k<N;k++)if(im[k])return im[k]};
@@ -80,7 +80,7 @@ new IntersectionObserver(e=>vis=e[0].isIntersecting).observe(hero);
 function loop(){requestAnimationFrame(loop);if(!vis)return;
  const d=Math.min(devicePixelRatio,1.5),w=Math.round(cv.clientWidth*d),h=Math.round(cv.clientHeight*d);
  if(w!==W||h!==H){W=w;H=h;cv.width=w;cv.height=h;dirty=1}
- SP=RM?P:lr(SP,P,.07);const t=(performance.now()-t0)/1000,u=Math.max(RM?0:eo(Math.min(t/3.4,1))*.22,Math.min(1,SP/.85)),f=u*(N-1);
+ SP=RM?P:lr(SP,P,.16);const t=(performance.now()-t0)/1000,u=Math.max(RM?0:eo(Math.min(t/1.6,1))*.22,Math.min(1,SP/.85)),f=u*(N-1);
  if(Math.abs(f-last)<.004&&!dirty)return;last=f;dirty=0;
  const i0=Math.floor(f),a=f-i0,g0=near(i0),g1=near(Math.min(N-1,i0+1));
  if(!g0)return;const G=geo(g0,.5);x.clearRect(0,0,W,H);fit(g0,1,G);if(g1&&g1!==g0&&a>.02)fit(g1,a,G);x.globalAlpha=1;upd(u,SP,G,d)}
